@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<head>
+<title>Delete Conformation</title>
+<f:metadata>
+    <f:event type="preRenderView" listener="#{user.loginCheck}" />
+</f:metadata>
+</head>
+<body>
+	<h:form>
+		<table
+			style="FONT-SIZE: small; margin: 0px auto 10px auto; padding: 0px 20px; border-radius: 10px; width: 100%">
+			<tr>
+				<th colspan="4"><h2>Incomes</h2></th>
+			</tr>
+			<tr>
+				<th colspan="4">
+					<table
+						style="background-color: black; color: white; height: 35px; width: 100%; border: 1px solid black; border-radius: 10px; table-layout: fixed;">
+						<tr>
+							<td align="left" style="padding-left: 10px"><h:link
+									style="color:black; border: 1px solid white;text-decoration:none; 
+														padding:3px; background-color:white"
+									value="&nbsp;&nbsp;Back&nbsp;&nbsp;" outcome="index">
+
+								</h:link></td>
+							<td></td>
+							<td align="right">Settings</td>
+						</tr>
+					</table>
+				</th>
+			</tr>
+			<tr>
+				<td>
+					<table
+						style="width: 100%; border: 1px solid black; border-radius: 10px;"
+						cellspacing="10">
+						<tr>
+							<td>
+								<table
+									style="margin: 30px auto 30px auto; border: 1px solid black; padding: 20px; border-radius: 10px; width: 500px"
+									cellspacing="15">
+									<tr>
+										<th colspan="4"><h2>Are you surely want to delete ?</h2></th>
+									</tr>
+
+									<tr>
+										<td align="center" colspan="4">
+										<h:inputHidden value="#{income.id}" />
+											<h:commandButton value="Delete" action="#{income.delete}"
+												style="margin-top: 20px ;padding:5px 20px" /> <h:commandButton
+												value="Cancel" action="index?faces-redirect=true"
+												style="margin-top: 20px ;padding:5px 20px" /></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</h:form>
+</body>
+</html>

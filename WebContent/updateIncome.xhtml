@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<head>
+<title>Update Income</title>
+<f:metadata>
+    <f:event type="preRenderView" listener="#{user.loginCheck}" />
+</f:metadata>
+</head>
+<body>
+
+	<table
+		style="FONT-SIZE: small; margin: 0px auto 10px auto; padding: 0px 20px; border-radius: 10px; width: 100%">
+		<tr>
+			<th colspan="4"><h2>Income</h2></th>
+		</tr>
+		<tr>
+			<th colspan="4">
+				<table
+					style="background-color: black; color: white; height: 35px; width: 100%; border: 1px solid black; border-radius: 10px; table-layout: fixed;">
+					<tr>
+						<td align="left" style="padding-left: 10px"><h:link
+								style="color:black; border: 1px solid white;text-decoration:none; 
+														padding:3px; background-color:white"
+								value="&nbsp;&nbsp;Back&nbsp;&nbsp;" outcome="index">
+
+							</h:link></td>
+						<td></td>
+						<td align="right">Settings</td>
+					</tr>
+				</table>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				<table
+					style="width: 100%; border: 1px solid black; border-radius: 10px;"
+					cellspacing="10">
+					<tr>
+						<td><h:form>
+								<table
+									style="margin: 30px auto 30px auto; border: 1px solid black; padding: 20px; border-radius: 10px; width: 500px"
+									cellspacing="15">
+									<tr>
+										<th colspan="4"><h2>Update Income</h2></th>
+									</tr>
+
+									<tr>
+										<td>When</td>
+										<td><h:inputText value="#{income.when}"
+												style="width:100px">
+												<f:convertDateTime pattern="dd-MM-yyyy" />
+											</h:inputText> <h:inputHidden value="#{income.id}" /></td>
+
+									</tr>
+									<tr>
+										<td>Category</td>
+										<td><h:inputText value="#{income.category}"
+												style="width:100%"></h:inputText></td>
+									</tr>
+									<tr>
+										<td>Amount</td>
+										<td><h:inputText value="#{income.income}"
+												style="width:100px"></h:inputText></td>
+									</tr>
+									<tr>
+										<td>Description</td>
+										<td><h:inputTextarea value="#{income.description}"
+												style="width:100%; height:100px" /></td>
+									</tr>
+									<tr>
+										<td align="center" colspan="4"><h:commandButton
+												value="Delete" action="deleteIncomeConformation"
+												style="margin-top: 20px ;padding:5px 20px" />
+											<h:commandButton value="Update" action="#{income.update}"
+												style="margin-top: 20px;margin-left:10px;padding:5px 20px" /></td>
+									</tr>
+								</table>
+							</h:form></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>

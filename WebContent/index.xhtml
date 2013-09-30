@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+<title>Expenses</title>
+<f:metadata>
+    <f:event type="preRenderView" listener="#{user.loginCheck}" />
+</f:metadata>
+</head>
+<body>
+
+	<table
+		style="FONT-SIZE: small; margin: 0px auto 10px auto; padding: 0px 20px; border-radius: 10px; width: 100%">
+		<tr>
+			<th colspan="4"><h2>Expenses</h2></th>
+		</tr>
+		<tr>
+			<th colspan="4">
+				<table
+					style="background-color: black; color: white; height: 35px; width: 100%; border: 1px solid black; border-radius: 10px;">
+					<tr>
+						<td align="left" style="padding-left: 10px; width: 300px;"><h:link
+								style="color:black; border: 1px solid white;margin-right:10px;text-decoration:none; 
+														padding:3px; background-color:white"
+								value="&nbsp;&nbsp;Add Expense&nbsp;&nbsp;" outcome="addExpense">
+
+							</h:link> <h:link
+								style="color:black; border: 1px solid white;margin-right:10px;text-decoration:none; 
+														padding:3px; background-color:white"
+								value="&nbsp;&nbsp;Add Income&nbsp;&nbsp;" outcome="addIncome">
+
+							</h:link></td>
+						<td><h:panelGroup>
+								<h:panelGroup
+									rendered="#{timeLine.timelineMode eq 'description'}">
+									<h:form>
+										<ui:repeat var="tlist"
+											value="#{timeLine.timeLineDescriptions}">
+											<h:commandLink
+												rendered="#{timeLine.timeLineDesc eq tlist[0]}"
+												style="color:white; border: 1px solid white;text-decoration:none; 
+														padding:3px; background-color:black"
+												action="#{timeLine.setTimeLineDesc(tlist[0])}"
+												value="#{tlist[1]}">
+
+											</h:commandLink>
+											<h:commandLink
+												rendered="#{timeLine.timeLineDesc ne tlist[0]}"
+												style="color:black; border: 1px solid white;text-decoration:none; 
+														padding:3px; background-color:white"
+												action="#{timeLine.setTimeLineDesc(tlist[0])}"
+												value="#{tlist[1]}">
+
+											</h:commandLink>
+										</ui:repeat>
+										<h:commandLink
+											style="margin-left : 10px; color:black; border: 1px solid white;text-decoration:none; 
+														padding:3px; background-color:white"
+											value="Edit" action="#{timeLine.togglerTimeLineMode}" />
+									</h:form>
+								</h:panelGroup>
+								<h:panelGroup
+									rendered="#{timeLine.timelineMode ne 'description'}">
+									<h:form>
+										<h:outputLabel value="From : " />
+										<h:selectOneMenu value="#{timeLine.fromdate}">
+											<f:selectItems value="#{timeLine.dateList}"></f:selectItems>
+										</h:selectOneMenu>
+										<h:selectOneMenu value="#{timeLine.fromMonth}">
+											<f:selectItems value="#{timeLine.monthList}"></f:selectItems>
+										</h:selectOneMenu>
+										<h:selectOneMenu value="#{timeLine.fromYear}">
+											<f:selectItems value="#{timeLine.yearList}"></f:selectItems>
+										</h:selectOneMenu>
+										<h:outputLabel value="To : " />
+										<h:selectOneMenu value="#{timeLine.todate}">
+											<f:selectItems value="#{timeLine.dateList}"></f:selectItems>
+										</h:selectOneMenu>
+										<h:selectOneMenu value="#{timeLine.toMonth}">
+											<f:selectItems value="#{timeLine.monthList}"></f:selectItems>
+										</h:selectOneMenu>
+										<h:selectOneMenu value="#{timeLine.toYear}">
+											<f:selectItems value="#{timeLine.yearList}"></f:selectItems>
+										</h:selectOneMenu>
+										<h:commandLink
+											style="margin-left : 10px; color:black; border: 1px solid white;text-decoration:none; 
+														padding:3px; background-color:white"
+											value="Fetch" action="#{timeLine.triggerSelectEvent}" />
+										<h:commandLink
+											style="margin-left : 10px; color:black; border: 1px solid white;text-decoration:none; 
+														padding:3px; background-color:white"
+											value="Prev" action="#{timeLine.togglerTimeLineMode}" />
+									</h:form>
+								</h:panelGroup>
+							</h:panelGroup></td>
+						<td align="right" style="width: 300px">Settings</td>
+					</tr>
+				</table>
+			</th>
+		</tr>
+		<tr>
+			<th colspan="4">
+				<table
+					style="height: 35px; width: 100%; border: 1px solid black; border-radius: 10px;">
+					<tr>
+						<th>Dash board</th>
+					</tr>
+				</table>
+			</th>
+		</tr>
+		<tr>
+			<td colspan="4">
+				<table
+					style="width: 100%; border: 1px solid black; border-radius: 10px;"
+					cellspacing="10">
+					<tr>
+						<td>
+							<table
+								style="width: 100%; border: 1px solid black; border-radius: 10px;"
+								cellspacing="10">
+								<tr>
+									<td>
+										<table
+											style="width: 450px; border: 1px solid black; border-radius: 10px;"
+											cellspacing="10">
+											<tr>
+												<td colspan="2">
+													<h2>Time Period
+														#{timeLine.fromdate}-#{timeLine.fromMonth}-#{timeLine.fromYear}
+														To
+														#{timeLine.todate}-#{timeLine.toMonth}-#{timeLine.toYear}</h2>
+												</td>
+											</tr>
+											<tr>
+												<th align="left">Total Expenses :</th>
+												<th align="right"><h:outputText
+														value="#{statistics.totalExpense}">
+														<f:convertNumber pattern="#0.00" />
+													</h:outputText></th>
+											</tr>
+											<tr>
+												<th align="left">Total Incomes :</th>
+												<th align="right"><h:outputText
+														value="#{statistics.totalIncomes}">
+														<f:convertNumber pattern="#0.00" />
+													</h:outputText></th>
+											</tr>
+											<tr>
+												<th align="left">Savings :</th>
+												<th align="right"><h:outputText
+														value="#{statistics.savings}">
+														<f:convertNumber pattern="#0.00" />
+													</h:outputText></th>
+											</tr>
+										</table>
+									</td>
+									<td><h:panelGroup rendered="#{statistics.cashInHand >= 0}">
+											<h2 style="color: green">
+												Cash In Hand :
+												<h:outputText value="#{statistics.cashInHand}">
+													<f:convertNumber pattern="#0.00" />
+												</h:outputText>
+											</h2>
+										</h:panelGroup> <h:panelGroup rendered="#{statistics.cashInHand lt 0}">
+											<h2 style="color: red;">
+												Your Current Credit :
+												<h:outputText value="#{statistics.cashInHand * -1}">
+													<f:convertNumber pattern="#0.00" />
+												</h:outputText>
+											</h2>
+										</h:panelGroup></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<th colspan="4">
+				<table
+					style="height: 35px; width: 100%; border: 1px solid black; border-radius: 10px;">
+					<tr>
+						<th>Expenses</th>
+					</tr>
+				</table>
+			</th>
+		</tr>
+		<tr>
+			<td colspan="4">
+				<table
+					style="width: 100%; border: 1px solid black; border-radius: 10px;"
+					cellspacing="10">
+					<tr>
+						<td
+							style="width: 300px; border: 1px solid black; border-radius: 10px;"
+							valign="top">
+							<table style="width: 100%;" cellspacing="0px">
+								<tr>
+									<td>
+										<table
+											style="height: 30px; width: 100%; border-bottom: 1px solid black">
+											<tr>
+												<th>Expenses Category</th>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<h:form>
+									<h:panelGroup
+										rendered="#{not empty expensesCategories.selected}">
+										<tr>
+											<td style="padding: 10px" align="center"><h:commandLink
+													action="#{expensesCategories.setSelected(null)}"
+													style="color:black; text-decoration:none" value="All" /></td>
+										</tr>
+									</h:panelGroup>
+									<h:panelGroup rendered="#{empty expensesCategories.selected}">
+										<tr>
+											<td
+												style="padding: 10px; background-color: black; border-radius: 10px"
+												align="center"><h:commandLink
+													action="#{expensesCategories.setSelected(null)}"
+													style="color:white; text-decoration:none" value="All" /></td>
+										</tr>
+									</h:panelGroup>
+								</h:form>
+								<ui:repeat var="category"
+									value="#{expensesCategories.categories}" varStatus="status">
+									<h:form>
+										<h:panelGroup
+											rendered="#{expensesCategories.selected ne category}">
+											<tr>
+												<td style="padding: 10px" align="center"><h:commandLink
+														action="#{expensesCategories.setSelected(category)}"
+														style="color:black; text-decoration:none"
+														value="#{category}" /></td>
+											</tr>
+										</h:panelGroup>
+										<h:panelGroup
+											rendered="#{expensesCategories.selected eq category}">
+											<tr>
+												<td
+													style="padding: 10px; background-color: black; border-radius: 10px"
+													align="center"><h:commandLink
+														action="#{expensesCategories.setSelected(category)}"
+														style="color:white; text-decoration:none"
+														value="#{category}" /></td>
+											</tr>
+										</h:panelGroup>
+									</h:form>
+								</ui:repeat>
+							</table>
+						</td>
+						<td style="border: 1px solid black; border-radius: 10px;"
+							valign="top">
+							<table style="width: 100%" cellspacing="0px">
+								<tr>
+									<th
+										style="height: 30px; border-bottom: 1px solid black; padding: 0px;">When</th>
+									<th
+										style="height: 30px; border-bottom: 1px solid black; padding: 0px;">Category</th>
+									<th
+										style="height: 30px; border-bottom: 1px solid black; padding: 0px;">Description</th>
+									<th
+										style="height: 30px; border-bottom: 1px solid black; padding: 0px;">Expense</th>
+									<th
+										style="height: 30px; border-bottom: 1px solid black; padding: 0px;">Action</th>
+								</tr>
+								<ui:repeat var="exp" value="#{expenses.expenses}" varStatus="s">
+									<tr>
+										<td align="center" style="padding: 10px;"><h:outputText
+												value="#{exp.when}">
+												<f:convertDateTime pattern="dd - MMM -yyyy" timeZone="IST" />
+											</h:outputText></td>
+										<td align="left" style="padding: 10px 10px 10px 20px;">#{exp.category}</td>
+										<td style="padding: 10px">#{exp.description}</td>
+										<td align="right" style="padding: 10px"><h:outputText
+												value="#{exp.expense}">
+												<f:convertNumber pattern="#0.00" />
+											</h:outputText></td>
+										<td align="center"><h:form>
+												<h:commandLink value="Edit"
+													style="color:black;border: 1px solid black;text-decoration:none; 
+														padding:3px;"
+													action="#{expense.updateField(exp)}" />
+											</h:form></td>
+									</tr>
+								</ui:repeat>
+								<tr>
+									<td style="color: white;">_</td>
+								</tr>
+								<tr>
+									<th colspan="4" align="center"
+										style="padding: 10px; border-top: 1px solid black">Total
+										Expenses</th>
+									<td align="right"
+										style="padding: 10px; border-top: 1px solid black"><h:outputText
+											value="#{expenses.totalExpense}">
+											<f:convertNumber pattern="#0.00" />
+										</h:outputText></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<th colspan="4">
+				<table
+					style="height: 35px; width: 100%; border: 1px solid black; border-radius: 10px;">
+					<tr>
+						<th>Incomes</th>
+					</tr>
+				</table>
+			</th>
+		</tr>
+		<tr>
+			<td colspan="4">
+				<table
+					style="width: 100%; border: 1px solid black; border-radius: 10px;"
+					cellspacing="10">
+					<tr>
+						<td
+							style="width: 300px; border: 1px solid black; border-radius: 10px;"
+							valign="top">
+							<table style="width: 100%;">
+								<tr>
+									<td>
+										<table
+											style="height: 30px; width: 100%; border-bottom: 1px solid black">
+											<tr>
+												<th>Incomes Category</th>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<h:form>
+									<h:panelGroup
+										rendered="#{not empty incomesCategories.selected}">
+										<tr>
+											<td style="padding: 10px" align="center"><h:commandLink
+													action="#{incomesCategories.setSelected(null)}"
+													style="color:black; text-decoration:none" value="All" /></td>
+										</tr>
+									</h:panelGroup>
+									<h:panelGroup rendered="#{empty incomesCategories.selected}">
+										<tr>
+											<td
+												style="padding: 10px; background-color: black; border-radius: 10px"
+												align="center"><h:commandLink
+													action="#{incomesCategories.setSelected(null)}"
+													style="color:white; text-decoration:none" value="All" /></td>
+										</tr>
+									</h:panelGroup>
+								</h:form>
+								<ui:repeat var="category"
+									value="#{incomesCategories.categories}" varStatus="status">
+									<h:form>
+										<h:panelGroup
+											rendered="#{incomesCategories.selected ne category}">
+											<tr>
+												<td style="padding: 10px" align="center"><h:commandLink
+														action="#{incomesCategories.setSelected(category)}"
+														style="color:black; text-decoration:none"
+														value="#{category}" /></td>
+											</tr>
+										</h:panelGroup>
+										<h:panelGroup
+											rendered="#{incomesCategories.selected eq category}">
+											<tr>
+												<td
+													style="padding: 10px; background-color: black; border-radius: 10px"
+													align="center"><h:commandLink
+														action="#{incomesCategories.setSelected(category)}"
+														style="color:white; text-decoration:none"
+														value="#{category}" /></td>
+											</tr>
+										</h:panelGroup>
+									</h:form>
+								</ui:repeat>
+							</table>
+						</td>
+						<td style="border: 1px solid black; border-radius: 10px;"
+							valign="top">
+							<table style="width: 100%" cellspacing="0px">
+								<tr>
+									<th
+										style="height: 30px; border-bottom: 1px solid black; padding: 0px;">When</th>
+									<th
+										style="height: 30px; border-bottom: 1px solid black; padding: 0px;">Category</th>
+									<th
+										style="height: 30px; border-bottom: 1px solid black; padding: 0px;">Description</th>
+									<th
+										style="height: 30px; border-bottom: 1px solid black; padding: 0px;">Income</th>
+									<th
+										style="height: 30px; border-bottom: 1px solid black; padding: 0px;">Action</th>
+								</tr>
+								<ui:repeat var="inc" value="#{incomes.incomes}" varStatus="s">
+									<tr>
+										<td align="center" style="padding: 10px;"><h:outputText
+												value="#{inc.when}">
+												<f:convertDateTime pattern="dd - MMM -yyyy" timeZone="IST" />
+											</h:outputText></td>
+										<td align="left" style="padding: 10px 10px 10px 20px;">#{inc.category}</td>
+										<td style="padding: 10px">#{inc.description}</td>
+										<td align="right" style="padding: 10px"><h:outputText
+												value="#{inc.income}">
+												<f:convertNumber pattern="#0.00" />
+											</h:outputText></td>
+										<td align="center"><h:form>
+												<h:commandLink value="Edit"
+													style="color:black;border: 1px solid black;text-decoration:none; 
+														padding:3px;"
+													action="#{income.updateField(inc)}" />
+											</h:form></td>
+									</tr>
+								</ui:repeat>
+								<tr>
+									<td style="color: white;">_</td>
+								</tr>
+								<tr>
+									<th colspan="4" align="center"
+										style="padding: 10px; border-top: 1px solid black">Total
+										Incomes</th>
+									<td align="right"
+										style="padding: 10px; border-top: 1px solid black"><h:outputText
+											value="#{incomes.totalIncome}">
+											<f:convertNumber pattern="#0.00" />
+										</h:outputText></td>
+
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

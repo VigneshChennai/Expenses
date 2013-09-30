@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<head>
+<title>LogIn to Expenses</title>
+</head>
+<body>
+	<h:form>
+		<table
+			style="FONT-SIZE: small; margin: 0px auto 10px auto; padding: 0px 20px; border-radius: 10px; width: 100%">
+			<tr>
+				<td>
+				<table
+						style="width: 100%;"
+						cellspacing="10">
+						<tr><td>
+					<table
+						style="margin: 30px auto 30px auto; border: 1px solid black; padding: 20px; border-radius: 10px; width: 500px"
+						cellspacing="15">
+						<tr>
+							<th colspan="4"><h2>Enter Password</h2></th>
+						</tr>
+						<tr>
+							<td align="center"><h:outputLabel style="color:red" value="#{user.msg}" />
+							</td>
+						</tr>
+						<tr>
+							<td><h:inputSecret value="#{user.password}" style="width:100%">
+								</h:inputSecret></td>
+						</tr>
+						<tr>
+							<td align="center" colspan="4"><h:commandButton value="Submit"
+									action="#{user.verifyPassword}"
+									style="margin-top: 20px ;padding:5px 20px" /></td>
+						</tr>
+					</table></td></tr></table>
+				</td>
+			</tr>
+		</table>
+	</h:form>
+</body>
+</html>
